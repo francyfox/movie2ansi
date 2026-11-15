@@ -1,5 +1,5 @@
 declare module "*.css";
-declare module "*.mp4" {
+declare module "*.webm" {
 	const url: string;
 	export default url;
 }

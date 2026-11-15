@@ -6,7 +6,7 @@
 	"outputDirectory": "dist/web",
 	"headers": [
 		{
-			"source": "/(.*)\\.(js|css|wasm|mp4)",
+			"source": "/(.*)\\.(js|css|wasm|webm)",
 			"headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
 		}
 	]

@@ -2,7 +2,7 @@ import { byId } from "#libs/utils";
 import { setTone } from "#modules/ascii";
 import { getSettings } from "#modules/settings";
 import { encodeVideo } from "./web-encoder.service.ts";
-import defaultVideoUrl from "../../public/megumin.mp4";
+import defaultVideoUrl from "../../public/megumin.webm";
 
 const number = (id: string): number => Number(byId<HTMLInputElement>(id).value);
 

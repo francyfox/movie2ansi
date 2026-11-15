@@ -30,7 +30,7 @@ import {
 	showStats,
 	timings,
 } from "./stats.ts";
-import defaultVideoUrl from "../../public/megumin.mp4";
+import defaultVideoUrl from "../../public/megumin.webm";
 
 const settings = getSettings();
 
@@ -128,7 +128,7 @@ const loadFile = async (file: File): Promise<void> => {
  */
 const loadDefaultVideo = async (): Promise<void> => {
 	const blob = await fetch(defaultVideoUrl).then((response) => response.blob());
-	await loadFile(new File([blob], "megumin.mp4", { type: blob.type }));
+	await loadFile(new File([blob], "megumin.webm", { type: blob.type }));
 };
 
 /**
