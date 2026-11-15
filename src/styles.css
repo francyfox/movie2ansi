@@ -1,0 +1,78 @@
+body {
+	background: #c4c4c4;
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 26px;
+}
+
+section {
+	padding: 40px 0;
+	width: 100%;
+}
+
+.container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1680px;
+}
+
+.movie {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+}
+
+.movie-cell {
+	width: 100%;
+	height: 500px;
+	object-fit: contain;
+	background: #000;
+	border-radius: 3px;
+}
+
+.form {
+	padding: 10px;
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 3px;
+}
+
+#stats {
+	padding: 5px 0;
+	font-size: 18px;
+}
+
+.movie-pane {
+	position: relative;
+}
+
+.fps-badge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	padding: 2px 8px;
+	font:
+		14px / 1.4 ui-monospace,
+		monospace;
+	color: #7cfc7c;
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 3px;
+	pointer-events: none;
+}
+
+.convert {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin: 10px 0 0;
+	padding: 8px 10px;
+	font-size: 18px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+}
+
+.convert input[type="number"] {
+	width: 5em;
+}

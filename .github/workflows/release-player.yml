@@ -1,0 +1,101 @@
+# Publishes the <ansi-player> web component as a single JS file.
+# Triggered by pushing a tag like `player-v1.2.3`, or by hand (see `workflow_dispatch` below).
+name: Release player
+
+on:
+  push:
+    tags: ["player-v*"]
+  # Manual release: Actions -> this workflow -> Run workflow, type a version. The tag player-v<version> is created
+  # on the commit you run it from. With "dry run" it only builds and uploads an artifact.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version without the prefix, e.g. 1.2.3 or 1.2.3-rc.1"
+        required: true
+        type: string
+      prerelease:
+        description: "Mark the release as a pre-release (a version with a suffix is one anyway)"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Only build and upload an artifact, publish nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  player:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Decides the tag and whether to publish before anything is built, so a typo fails in seconds.
+      - name: Resolve release
+        id: release
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_PRERELEASE: ${{ inputs.prerelease }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            if ! [[ "$INPUT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
+              echo "::error::version must look like 1.2.3 or 1.2.3-rc.1, got '$INPUT_VERSION'"
+              exit 1
+            fi
+            tag="player-v$INPUT_VERSION"
+            publish=true
+            [ "$INPUT_DRY_RUN" = true ] && publish=false
+          else
+            tag="$GITHUB_REF_NAME"
+            publish=true
+          fi
+          version="${tag#player-v}"
+          prerelease=false
+          if [ "$INPUT_PRERELEASE" = true ] || [[ "$version" == *-* ]]; then prerelease=true; fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
+          echo "Release $tag (publish: $publish, pre-release: $prerelease)"
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+
+      - run: bun install --frozen-lockfile
+      - run: bun check
+      - run: bun test
+
+      # dist/ansi-player.js, minified, with the tag registration included.
+      - name: Build player
+        run: bun run build:player
+
+      - name: Checksum
+        run: |
+          cd dist
+          sha256sum ansi-player.js > ansi-player.js.sha256
+          ls -lh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: player
+          path: |
+            dist/ansi-player.js
+            dist/ansi-player.js.sha256
+
+      - name: Publish release
+        if: steps.release.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          PRERELEASE: ${{ steps.release.outputs.prerelease }}
+        run: |
+          flags=""
+          [ "$PRERELEASE" = true ] && flags="--prerelease"
+          # --target only matters when the tag does not exist yet (a manual release): it is created on this commit.
+          gh release create "$TAG" dist/ansi-player.js dist/ansi-player.js.sha256 \
+            --target "$GITHUB_SHA" \
+            --title "Player ${TAG#player-}" \
+            --generate-notes \
+            $flags

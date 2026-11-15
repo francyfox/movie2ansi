@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="./styles.css" />
+        <script src="./app.ts" type="module"></script>
+    </head>
+    <body>
+        <section>
+            <div class="container">
+                <div class="form">
+                    <label for="inputFile">Input movie</label>
+                    <input id="inputFile" type="file" accept="video/*" value="/home/fox/WebstormProjects/4toTheFloor/scenes/04_dance.mp4" />
+                    <label for="m2aFile">ANSI movie (.m2a)</label>
+                    <input id="m2aFile" type="file" accept=".m2a" />
+                    <fieldset class="convert">
+                        <legend>Convert the input movie to .m2a (in the browser, nothing is uploaded)</legend>
+                        <label>fps <input id="convertFps" type="number" min="1" max="60" value="30" /></label>
+                        <label>cells (short side) <input id="convertDensity" type="number" min="10" max="200" value="100" /></label>
+                        <label>cell aspect <input id="convertAspect" type="number" min="0.25" max="4" step="0.05" value="1" /></label>
+                        <label>contrast <input id="convertContrast" type="number" min="0.1" max="4" step="0.1" value="1" /></label>
+                        <label>gamma <input id="convertGamma" type="number" min="0.1" max="10" step="0.1" value="1.4" /></label>
+                        <label>luminance step <input id="convertStep" type="number" min="1" max="64" value="1" /></label>
+                        <label>dead band <input id="convertDeadband" type="number" min="0" max="64" value="0" /></label>
+                        <button id="convert" type="button">Convert</button>
+                        <button id="convertCancel" type="button" hidden>Cancel</button>
+                        <progress id="convertProgress" value="0" max="1" hidden></progress>
+                        <span id="convertStatus"></span>
+                        <a id="convertDownload" href="about:blank" download="movie.m2a" hidden>Download .m2a</a>
+                    </fieldset>
+                </div>
+                <pre id="stats"></pre>
+                <div class="movie">
+                    <div class="movie-pane">
+                        <video id="video" class="movie-cell" controls muted playsinline loop></video>
+                        <span id="videoFps" class="fps-badge">video – fps</span>
+                    </div>
+                    <div class="movie-pane">
+                        <canvas id="player" class="movie-cell"></canvas>
+                        <span id="canvasFps" class="fps-badge">canvas – fps</span>
+                    </div>
+                    <ansi-player id="ansi" class="movie-cell" controls loop show-fps></ansi-player>
+                </div>                
+            </div>
+        </section>
+    </body>
+</html>

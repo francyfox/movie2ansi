@@ -1,0 +1,27 @@
+#:schema ./encode.schema.json
+# Encoder config. Only inputPath is required; everything else shows its default.
+
+inputPath = "file:///home/fox/WebstormProjects/4toTheFloor/scenes/04_dance.mp4"
+outputPath = "out/04_dance.m2a"
+fps = 30
+seed = 0                    # same seed, same rain/glitches
+cellAspect = 0.5              # cell width / height: 1 = square (browser), 0.5 = terminal
+contrast = 1.0              # 0.1-4: ffmpeg contrast around mid-gray (1 = off); higher = sharper silhouettes
+gamma = 1.4                 # 0.1-10: ffmpeg gamma (1 = off); above 1 brightens midtones
+luminanceStep = 1           # 1-64: round brightness to a multiple of this (1 = off); 4-8 shrinks the file
+deadband = 0                # 0-64: ignore brightness drift up to this per frame (0 = off); calms flicker
+
+[look]
+backgroundColor = "#51311e"
+backgroundGradient = true
+backgroundSaturation = 30   # 0-100
+fontColor = "#ff7800"
+fontColor2 = "#e5e5e5"
+fontSizeFactor = 3          # 0-10 (browser only; ignored in ANSI)
+pixelSizeFactor = 80        # 10-200, cells along the shorter side
+threshold = 30              # 0-95
+textInput = "PleiadesOrchestra"
+randomness = 15             # 0-100
+invert = false
+animationType = "Random Text"  # "Random Text" | "User Text"
+effectWidth = 100           # 0-100

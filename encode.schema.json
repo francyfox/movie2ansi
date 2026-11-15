@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "inputPath"
+  ],
+  "properties": {
+    "inputPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outputPath": {
+      "type": "string",
+      "minLength": 1,
+      "default": "out/output.m2a"
+    },
+    "seed": {
+      "type": "integer",
+      "default": 0
+    },
+    "fps": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 240,
+      "default": 30
+    },
+    "cellAspect": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 4,
+      "default": 1
+    },
+    "contrast": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 4,
+      "default": 1
+    },
+    "gamma": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 10,
+      "default": 1
+    },
+    "luminanceStep": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64,
+      "default": 1
+    },
+    "deadband": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 64,
+      "default": 0
+    },
+    "look": {
+      "type": "object",
+      "properties": {
+        "backgroundColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#51311e"
+        },
+        "backgroundGradient": {
+          "type": "boolean",
+          "default": true
+        },
+        "backgroundSaturation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 30
+        },
+        "fontColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#ff7800"
+        },
+        "fontColor2": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#e5e5e5"
+        },
+        "fontSizeFactor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 3
+        },
+        "pixelSizeFactor": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 200,
+          "default": 90
+        },
+        "threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 95,
+          "default": 30
+        },
+        "textInput": {
+          "type": "string",
+          "default": "PleiadesOrchestra"
+        },
+        "randomness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 3
+        },
+        "invert": {
+          "type": "boolean",
+          "default": false
+        },
+        "animationType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "Random Text"
+            },
+            {
+              "type": "string",
+              "const": "User Text"
+            }
+          ],
+          "default": "Random Text"
+        },
+        "effectWidth": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 100
+        }
+      },
+      "additionalProperties": false,
+      "default": {}
+    }
+  },
+  "additionalProperties": false
+}

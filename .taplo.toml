@@ -1,0 +1,7 @@
+include = ["*.toml"]
+
+[[rule]]
+include = ["encode.toml"]
+
+[rule.schema]
+path = "./encode.schema.json"
