@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/logo.webp" alt="Movie2Ansi logo" width="96" height="96">
+
 # Movie2Ansi
 
 **Turns a video into ASCII/ANSI art, once, and plays it back in a terminal or on a web page.**
@@ -14,6 +16,8 @@
 [![License](https://img.shields.io/badge/license-Unlicense-111827?style=for-the-badge)](LICENSE)
 
 </div>
+
+<p align="center"><img src="docs/demo.gif" alt="A video on the left, the same frames as ANSI art on the right" width="720"></p>
 
 ## What it is
 
