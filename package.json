@@ -12,6 +12,7 @@
 		"schema": "bun ./src/schema.ts",
 		"encode": "bun ./src/encode.ts -c encode.toml",
 		"play": "bun ./src/play.ts",
+		"build:web": "bun build ./src/index.html --outdir dist/web --minify",
 		"build:player": "bun ./scripts/build-player.ts",
 		"build:bin": "bun ./scripts/build-binaries.ts"
 	},
